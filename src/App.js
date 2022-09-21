@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 const api = {
-  key: "7d4ef5d23648c7c62acd3ccfa1a0a30b",
+  key: "5e761a3c84317ac4b124c7162536b997",
   base: "https://api.openweathermap.org/data/2.5/"
 }
 
 function App() {
-  const [query, setQuery] = useState('');
+  const [cityName, setCityName] = useState('');
   const [weather, setWeather] = useState({});
 
   const search = evt => {
     if (evt.key === "Enter") {
-      fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+      fetch(`${api.base}weather?q=${cityName}&units=metric&appid=${api.key}`)
         .then(res => res.json())
         .then(result => {
           setWeather(result);
-          setQuery('');
+          setCityName('');
           console.log(result);
         });
     }
@@ -40,8 +40,8 @@ function App() {
             type="text"
             className="search-bar"
             placeholder="Search..."
-            onChange={e => setQuery(e.target.value)}
-            value={query}
+            onChange={e => setCityName(e.target.value)}
+            value={cityName}
             onKeyPress={search}
           />
         </div>
@@ -58,7 +58,7 @@ function App() {
             <div className="weather">{weather.weather[0].main}</div>
           </div>
         </div>
-        ) : ('')}
+        ) : (<h2 className='notfound_title'>City Not Found</h2>)}
       </main>
     </div>
   );
